@@ -28,12 +28,20 @@
                     <div class="form-group">
                         <label class="navbarText col-sm-2">Filter:</label>
                         <div class="col-sm-10">
+                          <!-- This portion is for on keyup event and search only in the firstName -->
                             <input
+                                type="text"
+                                name="searchText"
+                                [(ngModel)]="searchText"
+                                (keyup)="filterCustomer($event)"                              
+                                class="novalidate form-control"
+                            >
+                            <!-- <input
                                 type="text"
                                 name="searchText"
                                 [(ngModel)]="searchText"                                
                                 class="novalidate form-control"
-                            >
+                            > -->
                         </div>
                     </div>
                 </form>
