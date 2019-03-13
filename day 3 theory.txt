@@ -1,0 +1,120 @@
+In angular.json
+	entry point is "main.ts"
+	and start file is "index.html"
+
+Q. When to use component or directive
+Component has state and behaviour
+it is bound to a model
+
+Directives- will not have template and styles associated
+	will not manupulating state or behaviour of a model
+	will use like change background color etc
+	never ever create or deleting a DOM element.
+
+> ng g directive hover
+
+@HostListener('mouseover')
+
+@HostListener it can listen any DOM event
+
+Directive can also take as an input
+
+
+@HostBinding("style.border")
+border: string;
+It can be used for handling style sheet in the loaded directives
+
+
+Service
+a) Injectable into component
+b) can contain business logic
+c) interaction with RESTful Web Services
+d) Sharing data between components
+
+
+Install JSON server
+npm i -g json-server
+
+copy data.json to common folder
+and run the following
+
+json-server --port 3000 --watch .\data.json
+
+Angular Service fir RESTful Web Services
+-------
+We can use Promise APIs or Observable
+
+In Observable pattern
+--Observable
+	which will have actual data and n numbers of observer subscribing to it.
+	whenever a data change in the observerable
+	Request can be cancel after request before result comes while Promise can'take
+	
+
+Creating a service	
+	> ng g s common/data	
+
+	@Injectable{(
+	 providedIn :'root' 
+	})
+	export class DataService {
+
+	  constructor() { }
+	}
+
+
+	Include HttpClientModule in app.module.ts
+	provide HttpClient service using which we can make AJAX calls
+
+	Prior to Version 5 (angular 5)
+
+	this.http.get(this.baseCustomerUrl).map(data=>{
+		data was transformed into customer[]
+	});
+
+	New One
+
+	  getCustomer(): Observable<Customer[]> {
+		return this.http.get<Customer[]>(this.baseCustomerUrl);
+	  }
+	  
+----------
+Create home component
+ng g c home	  
+
+open home.component.ts
+
+export class HomeComponent implements OnInit {
+ customerObs$;
+  constructor(private datatService: DataService) { }
+
+  ngOnInit() {
+    //convention for obserable variable ends with $
+    //this.customerObs$ = this.datatService.getCustomers();
+	
+	this.customerObs$ = this.datatService.getCustomers().pipe(
+      shareReplay()
+    );
+  }
+
+}
+
+
+-------------------------------
+
+ng g c first
+ng g c second
+
+ng g s common/shared
+
+Subject
+
+-------------
+
+ng g pipe caps
+
+Angular form
+dirty -- means touch
+pristine -- not touch the value
+firstName.pristine
+#firstName="ngModel --- use for local reference
