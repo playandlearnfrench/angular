@@ -118,3 +118,9 @@ dirty -- means touch
 pristine -- not touch the value
 firstName.pristine
 #firstName="ngModel --- use for local reference
+
+const routes: Routes = [
+{
+    path: "",  component: HomeComponent
+},{path: 'lazymodule', loadChildren:'./lazymodule/lazymodule.module#LazyModuleModule'}
+];
